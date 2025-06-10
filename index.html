@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Win Ya Lun!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Set Inter font */
+            /* Light, subtle white/light blue gradient background */
+            background: linear-gradient(135deg, #F0F2F5 0%, #E0E5EC 100%);
+            display: flex;
+            flex-direction: column; /* Arrange content in a column */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            margin: 0;
+            overflow-x: hidden; /* Hide horizontal scrollbars */
+            padding-bottom: 60px; /* Space for footer */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* More transparent white background */
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 50px; /* Increased padding */
+            border-radius: 20px; /* Rounded corners for the container */
+            /* Soft, diffused shadow */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            /* Stronger glassmorphism effect */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            max-width: 90%; /* Max width for responsiveness */
+            width: 550px; /* Slightly wider fixed width for larger screens */
+            text-align: center;
+            /* Light border */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px; /* Space between main container and content pages */
+        }
+
+        .title-text {
+            font-size: 3.5rem; /* Very large font size for the title */
+            font-weight: 900; /* Extra bold */
+            color: #2C3E50; /* Dark blue-gray text */
+            /* Subtle text shadow */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px; /* More spacing below the title */
+            letter-spacing: 3px; /* Increased letter spacing */
+        }
+
+        .main-button {
+            /* Modern, light metallic gradient button */
+            background: linear-gradient(45deg, #E0E5EC, #B0BEC5);
+            color: #333333; /* Dark text */
+            font-size: 3rem; /* Very large font size */
+            font-weight: 900; /* Extra bold */
+            padding: 25px 50px; /* Increased padding */
+            border: none;
+            border-radius: 20px; /* More rounded corners */
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transitions */
+            /* Soft button shadow */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            /* Border for subtle 3D effect */
+            border-bottom: 4px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .main-button:hover {
+            transform: translateY(-5px); /* Subtle lift effect on hover */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            border-bottom: 4px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .main-button:active {
+            transform: translateY(0); /* Press effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .result-display {
+            font-size: 7rem; /* Huge font for result */
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); /* Glow effect for text */
+            opacity: 0; /* Initially hidden */
+            transform: scale(0.6); /* Initially more scaled down */
+            transition: all 0.7s ease-out; /* Slower, very smooth transition for appearance */
+            user-select: none; /* Prevent text selection */
+            margin-top: 30px; /* More space above result */
+        }
+
+        .result-display.show {
+            opacity: 1; /* Show when 'show' class is added */
+            transform: scale(1); /* Scale up to normal size */
+        }
+
+        /* Specific, attractive colors for WIN/LUN */
+        .result-display.win {
+            color: #28a745; /* Clean, classic green */
+            text-shadow: 0 0 25px rgba(40, 167, 69, 0.7), 0 0 40px rgba(40, 167, 69, 0.5);
+        }
+
+        .result-display.lun { /* Changed back to .lun */
+            color: #dc3545; /* Clean, classic red */
+            text-shadow: 0 0 25px rgba(220, 53, 69, 0.7), 0 0 40px rgba(220, 53, 69, 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px;
+            }
+            .title-text {
+                font-size: 3rem;
+                margin-bottom: 30px;
+            }
+            .main-button {
+                font-size: 2.5rem;
+                padding: 20px 40px;
+            }
+            .result-display {
+                font-size: 5.5rem;
+            }
+            .content-page {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px;
+            }
+            .title-text {
+                font-size: 2.2rem;
+                margin-bottom: 25px;
+            }
+            .main-button {
+                font-size: 2rem;
+                padding: 15px 30px;
+            }
+            .result-display {
+                font-size: 4.5rem;
+            }
+            .content-page {
+                padding: 15px;
+            }
+            footer {
+                padding: 10px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .title-text {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            .main-button {
+                font-size: 1.5rem;
+                padding: 12px 25px;
+            }
+            .result-display {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Styling for content pages (initially hidden) */
+        .content-page {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            max-width: 90%;
+            width: 550px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: none; /* All content pages are hidden by default */
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .content-page h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2C3E50;
+            margin-bottom: 15px;
+        }
+
+        .content-page p, .content-page ul {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .content-page ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 40px;
+            width: 100%;
+            text-align: center;
+            color: #555;
+            font-size: 0.9rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 15px 0;
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent background for footer */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.6);
+            z-index: 1000; /* Ensure footer is on top */
+        }
+
+        footer a {
+            color: #2C3E50;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #4ECDC4; /* Teal color on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Main game container -->
+    <div class="container" id="mainGame">
+        <!-- Title text: "Win Ya Lun!" -->
+        <div class="title-text">Win Ya Lun?</div>
+
+        <!-- Main button to click -->
+        <button id="clickButton" class="main-button">Press!</button>
+
+        <!-- Div to display the result (WIN or LUN) -->
+        <div id="resultDisplay" class="result-display"></div>
+    </div>
+
+    <!-- Content pages (initially hidden) -->
+    <div class="content-page" id="privacyPolicyPage">
+        <h2>Privacy Policy</h2>
+        <p>Your privacy is important to us. This policy explains how we handle information on this simple website. We do not collect any personal data from you when you use this site. No cookies are used for tracking purposes. We may use third-party services (like Google AdSense, if implemented in the future) that might use cookies. You can always adjust your browser settings to disable cookies.</p>
+        <p>This site is for entertainment purposes only and does not store any user-specific information. We reserve the right to update this policy at any time.</p>
+        <p><a href="#" onclick="showPage('mainGame')">Back to Game</a></p>
+    </div>
+
+    <div class="content-page" id="aboutUsPage">
+        <h2>About Win Ya Lun!</h2>
+        <p>Welcome to Win Ya Lun! This is a simple, fun, and random outcome generator designed for pure entertainment. Our goal is to provide a quick moment of suspense and amusement with just a single click. Whether you get "WIN" or "LUN", the spirit is to enjoy the unpredictable nature of chance.</p>
+        <p>This website was created with a minimalist design approach, focusing on a clean aesthetic and seamless user experience across all devices.</p>
+        <p><a href="#" onclick="showPage('mainGame')">Back to Game</a></p>
+    </div>
+
+    <div class="content-page" id="contactUsPage">
+        <h2>Contact Us</h2>
+        <p>Have questions or feedback? We'd love to hear from you!</p>
+        <p>You can reach us at: <a href="mailto:winyalun@proton.me" class="text-blue-600 hover:underline">winyalun@proton.me</a></p>
+        <p>We appreciate your interest in Win Ya Lun!</p>
+        <p><a href="#" onclick="showPage('mainGame')">Back to Game</a></p>
+    </div>
+
+    <!-- Footer for navigation -->
+    <footer>
+        <a href="#" onclick="showPage('privacyPolicyPage')">Privacy Policy</a>
+        <a href="#" onclick="showPage('aboutUsPage')">About Us</a>
+        <a href="#" onclick="showPage('contactUsPage')">Contact Us</a>
+    </footer>
+
+    <script>
+        // Function to show a specific page and hide others
+        function showPage(pageId) {
+            const pages = ['mainGame', 'privacyPolicyPage', 'aboutUsPage', 'contactUsPage'];
+            pages.forEach(id => {
+                const page = document.getElementById(id);
+                if (page) {
+                    // All content pages are initially hidden by default via CSS.
+                    // When 'showPage' is called, we explicitly set display.
+                    // For mainGame, we use 'flex' as it's centered using flexbox.
+                    // For content pages, 'block' is suitable for text content.
+                    if (id === pageId) {
+                        page.style.display = (id === 'mainGame') ? 'flex' : 'block';
+                    } else {
+                        page.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const clickButton = document.getElementById('clickButton');
+            const resultDisplay = document.getElementById('resultDisplay');
+
+            // Set initial page view to the main game
+            showPage('mainGame');
+
+            // Add click event listener to the main button
+            clickButton.addEventListener('click', () => {
+                // Hide the button
+                clickButton.style.display = 'none';
+
+                // Randomly determine the outcome: WIN (30%) or LUN (70%)
+                const outcome = Math.random() < 0.3 ? 'WIN' : 'LUN'; // Changed probability
+
+                // Set the text content and add appropriate class for color/animation
+                resultDisplay.textContent = outcome;
+                resultDisplay.classList.remove('win', 'lun'); // Clear previous classes
+                resultDisplay.classList.add(outcome.toLowerCase()); // Add 'win' or 'lun' class
+
+                // Show the result with animation
+                resultDisplay.classList.add('show');
+
+                // After a short delay, hide the result and show the button again
+                setTimeout(() => {
+                    resultDisplay.classList.remove('show'); // Hide result
+                    setTimeout(() => {
+                        clickButton.style.display = 'block'; // Show button
+                    }, 700); // Allow animation to finish before button reappears (slightly longer)
+                }, 2000); // Display result for 2 seconds (slightly longer)
+            });
+        });
+    </script>
+</body>
+</html>
